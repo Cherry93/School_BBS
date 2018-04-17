@@ -1,7 +1,7 @@
 # School_BBS
 项目基本完善版本
 
-## 欢迎fork / star 如果有问题请Issues 我 或者联系我的qq邮箱：358544104@
+## 欢迎fork / star 如果有问题请Issues 我 或者联系我的qq邮箱：358544104@qq.com
 # 效果预览
 ### 主页面
 
