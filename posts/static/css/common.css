@@ -1,0 +1,10 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.footer {
+	color:#666666;
+	font-size:14px;
+	font-family:Verdana;
+	text-align:center;
+}

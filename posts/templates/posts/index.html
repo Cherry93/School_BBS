@@ -1,0 +1,213 @@
+{% extends "posts/base.html" %}
+{% load static %}
+{% load staticfiles %}
+{% load blog_tags %}
+{#{% block title %} 湖北工业大学 BBS站{% endblock %}#}
+{% block left %}
+    		<!-- Left Column -->
+		<div class="col-sm-3">
+<!-- Text Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3  style="color: red" class="panel-title">
+						<span class="glyphicon glyphicon-bullhorn"></span>
+						公告：新人必读
+					</h3>
+				</div>
+				<div class="panel-body">
+					<p style="color:red;">请文明浏览帖子，发布帖子，文明用语，禁止不良内容的发布，一经发现，封号三天，请注意</p>
+                    <p style="color:red;">游客需要登录才能发帖，转贴，点赞和收藏</p>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default">Resource</button>
+						<button type="button" class="btn btn-default">Envision</button>
+						<button type="button" class="btn btn-default">Niche</button>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- List-Group Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title"><span class="glyphicon glyphicon-tags"></span> 话题 </h1>
+				</div>
+
+                <div class="widget widget-tag-cloud">
+                    <h3 class="widget-title"></h3>
+                    {% get_tags as tag_list %}
+                    <ul class="fa-ul">
+                        {% for tag in tag_list %}
+
+                            <li class=" ">
+                                <a style="font-size: medium" href="{% url 'posts:tags' tag.pk %}">{{ tag.name }}({{ tag.num_post }})</a>
+                            </li>
+                        {% empty %}
+                            暂无标签
+                        {% endfor %}
+                    </ul>
+                </div>
+{#				<div class="list-group">#}
+{#					<a href="#" class="list-group-item">Embrace Change </a>#}
+{#					<a href="#" class="list-group-item">KISS: Keep it simple, stupid!</a>#}
+{#					<a href="#" class="list-group-item">Hide Implementation Details</a>#}
+{#					<a href="#" class="list-group-item">LoD: Law of Demeter</a>#}
+{#					<a href="#" class="list-group-item">DRY: Don't Repeat Youself</a>#}
+{#				</div>#}
+			</div>
+
+			<!-- Text Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title"><span class="glyphicon glyphicon-pencil"></span> 热点信息</h1>
+				</div>
+
+				<div class="panel-body">
+                    <div  class="pre-scrollable">
+                        {% for info in hotinfo %}
+                    <li class="list-group-item"><a href={{ info.link }}>{{ info.title }}</a></li>
+                        {% endfor %}
+
+{#                    <li class="list-group-item"><a href=" http://dean.hbut.edu.cn">湖北工业大学教务处</a></li>#}
+{#                    <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>#}
+{#                    <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>#}
+{#                    <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>#}
+{#                    <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>#}
+{#                        <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>#}
+{#                         <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>#}
+{#                         <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>#}
+                    </div>
+					<p><button class="btn btn-default">Engage</button></p>
+				</div>
+			</div>
+
+<!-- advertisements -->
+ 			<h3><span class="glyphicon glyphicon-link"></span> 友情连接</h3>
+			<div id="side-carousel" class="carousel slide" data-ride="carousel">
+				<ol class="carousel-indicators">
+					<li data-target="#side-carousel" data-slide-to="0" class="active"></li>
+					<li data-target="#side-carousel" data-slide-to="1"></li>
+					<li data-target="#side-carousel" data-slide-to="2"></li>
+				</ol>
+				<div class="carousel-inner" role="listbox">
+					<div class="item active">
+						<a href="http://www.hbut.edu.cn/">
+							<img class="img-responsive" src=" http://www.hbut.edu.cn/upload/images/2018/1/16122932393.jpg" style="height:300px;width:400px"  alt="">
+						</a>
+						<div class="carousel-caption">
+							<h3>I am a genius</h3>
+							<p>湖北工业大学官网</p>
+						</div>
+					</div>
+					<div class="item">
+						<a href="http://dean.hbut.edu.cn">
+							<img class="img-responsive" src=" http://www.hbut.edu.cn/upload/images/2018/1/16123027867.jpg" style="height:300px;width:400px" alt="">
+						</a>
+						<div class="carousel-caption">
+							<h3>You are an idiot</h3>
+							<p>湖北工业大学教务处网站</p>
+						</div>
+					</div>
+					<div class="item">
+						<a href="http://jy.hbut.edu.cn/">
+							<img class="img-responsive" src="{% static 'img/link.jpg' %} " style="height:300px;width:400px" alt="">
+						</a>
+						<div class="carousel-caption">
+							<h3>Enough! </h3>
+							<p>湖 北 工 业 大 学 就 业 信 息 网 </p>
+						</div>
+					</div>
+				</div>
+				<a class="left carousel-control" href="#side-carousel" role="button" data-slide="prev">
+				  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				  <span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#side-carousel" role="button" data-slide="next">
+				  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				  <span class="sr-only">Next</span>
+				</a>
+			  </div>
+
+		</div><!--/Left Column-->
+{% endblock %}
+{% block conten %}
+		<!-- Center Column -->
+		<div class="col-sm-6">
+          {% if error_msg %}
+    <p>{{ error_msg }}</p>
+  {% endif %}
+
+			<!-- Articles -->
+{#        {% get_fav as post_list %}#}
+{#        {% get_like as post_list %}#}
+			{% for post in post_list %}
+			<div class="row">
+				<article class="col-xs-12">
+{#                0代表原创    精华帖是1  如果不是 真（1）那么就是原创#}
+{#                是原创但不是精华  0（是原创）和 0（不是精华） #}
+                    {% if not  post.post_from  and not  post.best_act%}
+					<h2><a id="post_title"  href="/detail/{{ post.id }}">[原创]{{ post.title }}</a> </h2>
+                        {% endif %}
+{#                            是原创和精华#}
+                            {% if post.best_act and not post.post_from %}
+                            <h2><a id="post_title"  href="/detail/{{ post.id }}">[原创]{{ post.title }}</a> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<a style="color:red;">精华</a> </h2>
+                            {% endif %}
+                    {% if not post.best_act and post.post_from %}
+                    <h2><a id="post_title"  href="/detail/{{ post.id }}">[转载]{{ post.title }}</a></h2>
+                {% endif %}
+
+{#					<p>{{ post.content|safe|truncatechars_html:80}}</p>#}
+				<!-- 	<p><button class="btn btn-default">Read More</button></p>  -->
+					<p class="pull-right"><span class="label label-default">{{ article.column }}</span> <span class="label label-default">{{ post.category }}</span> <span class="label label-default">{{ post.author }}</span></p>
+					<ul class="list-inline">
+
+
+						<li><a href="#">{{ post.created_time | date:"j M" }}</a></li>
+
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> {{ post.comment_num }} 人评论</a></li>
+
+						<li><a  href="#"><span class="glyphicon glyphicon-star-empty"></span>{{ post.favo_num}} 人收藏</a></li>
+                        <li><a href=" "><span class="glyphicon glyphicon-thumbs-up"></span>{{ post.like_num}} 人点赞</a></li>
+                         <li><a href=" "><span class="glyphicon glyphicon-eye-open"></span>{{ post.views}} 人阅读</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-send"></span>{{ post.transmit_num}} 人转发</a></li>
+                    </ul>
+				</article>
+			</div>
+			<hr>
+                {% empty %}
+    <div class="no-post">暂时还没有发布的文章！</div>
+			{% endfor %}
+			<div class="row">
+{#				<article class="col-xs-12">#}
+{#					<h2>Premier Niche Markets</h2>#}
+{#					<p>Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric "outside the box" thinking. Completely pursue scalable customer service through sustainable potentialities.</p>#}
+{#					<p><button class="btn btn-default">Read More</button></p>#}
+{#					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>#}
+{#					<ul class="list-inline">#}
+{#						<li><a href="#">Today</a></li>#}
+{#						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 2 Comments</a></li>#}
+{#						<li><a href="#"><span class="glyphicon glyphicon-star-empty"></span> 8 favorites</a></li>#}
+{#					</ul>#}
+{#				</article>#}
+			</div>
+			<hr>
+        <div class="pagination">
+    {% if is_paginated %}
+    <div class="pagination-simple">
+  <!-- 如果当前页还有上一页，显示一个上一页的按钮 -->
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+  {% endif %}
+  <!-- 显示当前页面信息 -->
+  <span class="current">第 {{ page_obj.number }} 页 / 共 {{ paginator.num_pages }} 页</span>
+  <!-- 如果当前页还有下一页，显示一个下一页的按钮 -->
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+  {% endif %}
+</div>
+{% endif %}
+</div>
+		</div><!--/Center Column-->
+
+
+
+{% endblock %}

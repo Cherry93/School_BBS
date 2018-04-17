@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+        {% load static %}
+{#        {% static "css/bootstrap.min.css" %}#}
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+		<link href="{% static "css/index.css" %}" rel="stylesheet" />
+		<link href="{% static "css/common.css" %}" rel="stylesheet" />
+		<!--
+        	描述：网页的icon图标
+        -->
+		<link rel="shortcut icon" href="{% static "img/favicon.ico" %}"/>
+		<title>欢迎进入湖北工业大学BBS站</title>
+	</head>
+	<body style=" padding-top: 15px;padding-bottom: 40px;">
+		<div class="container-fluid" style="width: 70%;" >
+			<img src="{% static "img/hbut1.jpg" %}" style="width: 100%;"/>
+			<div style="height: 15px;"></div>
+			<!--
+            	描述：登录/注册/游客功能
+            -->
+			<center>
+{#			<form class="form" action="{% url 'users:login' %}" method="post">#}
+{#				账号:<input class="textinput" id="id_username" name="username" type="text" />#}
+{#				密码:<input class="textinput" id="id_password" type="password" name="password"/>#}
+{#				<label><input type="checkbox" id="auto" name="auto"/> 记住我</label>#}
+                    <a href="{% url 'login' %}?next={{ request.path }}"><button type="button" class="btn btn-outline-primary btn-sm">登录</button></a>
+				<a href="{% url 'users:register' %}"><button type="button" class="btn btn-outline-primary btn-sm">注册</button></a>
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'posts:index' %}" ><button type="button" class="btn btn-outline-primary btn-sm">Hi:{{ user.username }} 进入主页</button></a>
+                {% else %}
+                 <a href="{% url 'posts:index' %}" ><button type="button" class="btn btn-outline-primary btn-sm">游客</button></a>
+                {% endif %}
+{#			</form>#}
+			<hr size="0" width="90%" color="#007BFF">
+			</center>
+		</div>
+		<!--
+        	描述：每页底部固定模板
+        -->
+		<div class="footer">
+			<span> Copyright &copy; 2018 <a href="###">湖北工业大学 BBS站</a> &nbsp;湖北工业大学. All rights reserved.<br /></span>
+			
+		</div>
+	</body>
+</html>

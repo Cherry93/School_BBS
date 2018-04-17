@@ -1,0 +1,16 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+form{
+	font: "微软雅黑";
+	font-size: 15px;
+	color:#0056B3;
+}
+input{
+	border: 0;
+}
+.textinput {
+	width:100px;
+	border-bottom:1px #2C59AA solid;
+}

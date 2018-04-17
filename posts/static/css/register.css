@@ -1,0 +1,22 @@
+*{
+	margin: 0;
+	padding: 0;
+}/*清除浏览器自带样式*/
+hr{
+	height: 2px;
+	margin-top:5px;
+	margin-bottom: 5px;
+}
+font{
+	font-size: 15px;
+}
+table.body {
+	BORDER: 1px solid; 
+	BORDER-COLOR: #CCCCCC;
+}
+table,td,input,select {
+	font-size: 14px;
+}
+td{
+	height: 28px;
+}

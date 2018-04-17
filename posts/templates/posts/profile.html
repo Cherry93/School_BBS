@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>湖北工业大学 BBS站</title>
+	{% load staticfiles %}
+    {% load bootstrap3 %}
+ <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "css/Pygments.css" %}" rel="stylesheet">
+
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link href="{% static "css/custom.css" %}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+            <!-- Logo and responsive toggle -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'posts:index' %} "><span class="glyphicon glyphicon-globe"></span> Logo</a>
+            </div>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href=" {% url 'posts:index' %} ">Home</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'posts:favorite' user.pk%} ">我的收藏</a>
+                    </li>
+                    <li>
+                        <a href=" {% url 'posts:profile' user.pk%}">我的帖子</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'posts:like' user.pk%} ">我的点赞</a>
+                    </li>
+                    <li>
+                        <a href=" {% url 'posts:tranmite' user.pk%}">我的转帖</a>
+                    </li>
+                    <li>
+                        <a href=" {% url 'posts:comment' user.pk%}">评论的帖子</a>
+                    </li>
+					<li class="dropdown">
+						<a href=" " class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Others <span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="about-us">
+							<li><a href=" ">Programming World</a></li>
+							<li><a href=" ">Poetry and the Distance</a></li>
+							<li><a href=" ">The Pots and Pans</a></li>
+						</ul>
+					</li>
+                </ul>
+
+				<!-- Search -->
+				<form class="navbar-form navbar-right" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Search</button>
+				</form>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<div class="container-fluid" style="height: 500px">
+
+{#    中间 帖子展示#}
+    <div class="col-sm-9" style="background:url({% static 'img/pro_bk.jpg'  %})  no-repeat ;background-size:1500px 1000px;height: 1000px">
+        {% for post in post_list %}
+        <article class="col-xs-12">
+					<h2><a id="post_title", href="/detail/{{ post.id }}">{{ post.title }}</a></h2>
+        </article>
+        {% endfor %}
+
+    {% for fav in fav_list %}
+        <article class="col-xs-12">
+					<h2><a id="post_title", href="/detail/{{ fav.id }}">{{ fav.post }}</a></h2>
+        </article>
+        {% endfor %}
+    </div>
+
+
+{#右边 个人信息 'avatar','username','signature','qq_num','major','phone'#}
+<div class="col-sm-3" style=" background:url({% static 'img/p_bk.jpg'  %})  no-repeat ;background-size:500px 1000px;height: 1000px">
+    <div style="margin: 30px">
+    <a  class="btn btn-primary btn-lg active" role="button" href="{% url 'password_change' %}?next={{ request.path }}"> 修改密码</a>
+    <a  class="btn btn-primary btn-lg active" role="button" href="{% url 'password_reset' %}">密码重置</a>
+        </div>
+        <form class="form" action="{% url "posts:update_ava" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+{#            {% bootstrap_form form %}#}
+
+            <a style="display: block" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+               aria-haspopup="true"
+               aria-expanded="false"><img src="/media/{{ user.avatar }}" alt="暂无图片"/><span class="caret"></span></a>
+
+            <label for="id_avatar">修改头像：</label>
+            <input type="file" name="avatar" id="id_avatar">
+            <br>
+            <button style="width: 20%" type="submit" class="btn btn-primary btn-block">确定</button>
+        </form>
+    <form class="form" action="{% url "posts:update_name" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h4>用户名：{{ user.username }}</h4>
+
+            <label for="id_photo">修改用户名：</label>
+            <input type="text" class="form-control" placeholder={{ user.username }} name="username" id="id_username">
+
+            <br>
+<button style="width: 20%" type="submit" class="btn btn-primary btn-block">确定</button>
+    </form>
+     <form class="form" action="{% url "posts:update_signature" %}" method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+            <h4>个性签名：{{ user.signature }}</h4>
+
+            <label for="id_signature">修改个新签名：</label>
+            <input  class="form-control"  type="text" name="signature" id="id_signature"
+                   placeholder={{ user.signature }}>
+            <br>
+<button style="width: 20%" type="submit" class="btn btn-primary btn-block">确定</button>
+     </form>
+     <form class="form" action="{% url "posts:update_qq" %}" method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+            <h4>qq号：{{ user.qq_num }}</h4>
+
+            <label for="qq_num">修改qq号：</label>
+            <input  class="form-control" placeholder={{ user.qq_num }} type="text" name="qq_num" id="id_qq_num">
+
+            <br>
+<button style="width: 20%" type="submit" class="btn btn-primary btn-block">确定</button>
+     </form>
+    <form class="form" action="{% url "posts:update_maj" %}" method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+        <h4>专业：{{ user.major}}</h4>
+
+            <label for="major">修改专业：</label>
+            <input  class="form-control" placeholder={{ user.major }} type="text" name="major" id="id_major">
+
+             <br>
+<button style="width: 20%" type="submit" class="btn btn-primary btn-block">确定</button>
+    </form>
+     <form class="form" action="{% url "posts:update_ph" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h4>电话：{{ user.phone}}</h4>
+
+            <label for="phone">修改电话：</label>
+            <input  class="form-control" placeholder={{ user.phone }} type="text" name="phone" id="id_phone">
+
+            <button style="width: 20%" type="submit" class="btn btn-primary btn-block">确定</button>
+        </form>
+    </div>
+</div>
+
+	<footer>
+		<div class="footer-blurb">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3 footer-blurb-item">
+						<h3><span class="glyphicon glyphicon-text-size"></span> Cute</h3>
+						<p>We don't read and write poetry because it's cute. We read and write poetry because we are members of the human race. And the human race is filled with passion. And medicine, law, business, engineering, these are noble pursuits and necessary to sustain life. But poetry, beauty, romance, love, these are what we stay alive for.</p>
+						<p><a class="btn btn-default" href=" ">Procrastinate</a></p>
+					</div>
+					<div class="col-sm-3 footer-blurb-item">
+						<h3><span class="glyphicon glyphicon-wrench"></span> Efficient</h3>
+						<p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. </p>
+						<p><a class="btn btn-default" href=" ">Unleash</a></p>
+					</div>
+					<div class="col-sm-3 footer-blurb-item">
+						<h3><span class="glyphicon glyphicon-paperclip"></span> Complete</h3>
+						<p>Professionally cultivate one-to-one customer service with robust ideas. Completely synergize resource taxing relationships via premier niche markets. Dynamically innovate resource-leveling customer service for state of the art customer service.</p>
+						<p><a class="btn btn-default" href=" ">Complete</a></p>
+					</div>
+					<div class="col-sm-3 footer-blurb-item">
+
+						<!-- Thumbnails -->
+						<h3><span class="glyphicon glyphicon-camera"></span> Phosfluorescent</h3>
+							<div class="row">
+								<div class="col-xs-6">
+									<a href=" " class="thumbnail">
+										<img src="holder.js/110x80" alt="">
+									</a>
+								</div>
+								<div class="col-xs-6">
+									<a href=" " class="thumbnail">
+										<img src="holder.js/110x80" alt="">
+									</a>
+								</div>
+								<div class="col-xs-6">
+									<a href=" " class="thumbnail">
+										<img src="holder.js/110x80" alt="">
+									</a>
+								</div>
+								<div class="col-xs-6">
+									<a href=" " class="thumbnail">
+										<img src="holder.js/110x80" alt="">
+									</a>
+								</div>
+							</div>
+
+					</div>
+
+				</div>
+				<!-- /.row -->
+			</div>
+        </div>
+
+        <div class="small-print">
+        	<div class="container">
+        	<p>	<span> Copyright &copy; 2018 <a href="###">湖北工业大学 BBS站</a> &nbsp;湖北工业大学. All rights reserved.<br /></span></p>
+        	</div>
+        </div>
+	</footer>
+
+
+    <!-- jQuery -->
+    <script src="{% static "js/jquery-1.11.3.min.js" %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+
+	<!-- IE10 viewport bug workaround -->
+	<script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
+
+	<!-- Placeholder Images -->
+	<script src="{% static "js/holder.min.js" %}"></script>
+
+</body>
+
+</html>

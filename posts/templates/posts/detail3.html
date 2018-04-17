@@ -1,0 +1,188 @@
+{% extends 'posts/base2.html' %}
+<h1>hello</h1>
+{% load static %}
+{% load bootstrap3 %}
+<h1>hello</h1>
+{% block content %}
+
+			<!-- Article -->
+			<div class="row">
+				<article class="col-xs-12">
+					<h2>{{ post.title }}</h2>
+					<p class="pull-right"><span class="label label-default">{{ article.column }}</span> <span class="label label-default">{{ post.created_time | date:"j M" }}</span> <span class="label label-default">{{ post.author}}</span></p>
+					<p><hr></p>
+					<p>{{ post.content_html| safe }}</p>
+					<p></p>
+					<ul class="list-inline">
+                    {% if user.is_authenticated %}
+                   {% csrf_token %}
+                        <li><a class="collect" href="javascript:" content_id ="{{post.id}}"><span class="glyphicon glyphicon-star-empty"></span> 收藏</a></li>
+                   {% else %}
+                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-star-empty"></span>{{ post.keep_num }} 收藏</a></li>
+                    {% endif %}
+{#						<li><a href=" "><span class="glyphicon glyphicon-comment"></span> {{ article.comment_num }} Comments</a></li>#}
+{#						<li><a href="#"><span class="glyphicon glyphicon-star-empty"></span>{{ article.keep_num }} Favorites</a></li>#}
+						<li><a   class="collect2" href="javascript:" content_id2 ="{{post.id}}"><span class="glyphicon glyphicon-thumbs-up"></span>{{ article.poll_num }} 点赞</a></li>
+                        <li><a class="collect3" href="javascript:" content_id3 ="{{post.id}}"><span class="glyphicon glyphicon-send"></span>{{ article.poll_num }} 转发</a></li>
+					</ul>
+				</article>
+			</div>			
+			<hr>
+			
+			<!-- Comments -->
+			<h3>Comments:</h3>
+			<hr>
+			{% for comment in comment_list %}
+			<div class="row">
+				
+				<article class="col-xs-12">
+
+					<p class="pull-right"> <span class="label label-default">{{ forloop.counter }} 楼</span> <span class="label label-default">{{ comment.user }}</span></p>
+                    {% for u in avt %}
+                    {% if comment.user_id == u.id  %}
+                    <p style="margin:1px 10px;float: left"><img src="/media/{{ u.avatar}}" alt="暂无图片"/></p>
+
+
+                    <p class="users"><strong >{{ comment.user }}</strong> </p>
+                        <p>{{ comment.text | safe}}</p>
+				<!-- 	<p><button class="btn btn-default">Read More</button></p>  -->
+                        {% endif %}
+					 {% endfor %}
+					<ul class="list-inline">
+						<li><a href=" ">{{ comment.created_time| date:"j M" }}</a></li>
+						<li><a href="javascript:; " class="reply" id={{ comment.id }} data-user={{ comment.user }}><span class="glyphicon glyphicon-comment"></span> {{ comment.comment_num }} 回复</a></li>
+						<li><a href=" "><span class="glyphicon glyphicon-thumbs-up"></span>{{ comment.poll_num }} Upvotes</a></li>
+					</ul>
+
+                    {% for reply in reply_list %}
+                    {% if comment.id == reply.comment_id %}
+
+
+                    <ul style="margin-left: 30px" class="list-inline">
+                        <p style="margin:1px 10px;float: left"><img src="/media/{{ user.avatar }}" alt="暂无图片"/></p>
+                    <p><strong>{{ reply.author }}</strong> </p>
+                        <p>{{ reply.content | safe}}</p>
+						<li><a href=" ">{{ comment.created_time| date:"j M" }}</a></li>
+{#						<li><a href=" "><span class="glyphicon glyphicon-comment"></span> {{ comment.comment_num }} 回复</a></li>#}
+{#						<li><a href=" "><span class="glyphicon glyphicon-thumbs-up"></span>{{ comment.poll_num }} Upvotes</a></li>#}
+					</ul>
+
+                    {% endif %}
+
+                    {% endfor %}
+				</article>
+			</div>			
+			<hr>
+			{% endfor %}
+            <div class="credit-card"  style="display: none;">
+              <textarea class="content-reply"></textarea>
+              <button type="button" class="submit-reply">提交</button>
+          </div>
+			<!-- CommentForm   -->
+			<div class="row">
+				<article class="col-xs-12">
+					<h4>Sharing you comment:</h4>
+					<form action="{% url 'comments:post_comment'  post.pk %}" method="post">
+						{% csrf_token %}
+						{{ form.media }}
+                {% bootstrap_form form %}
+						<input class="btn btn-default" type="submit" value="Submit" />
+					</form>
+				</article>
+			</div>			
+			<hr>
+
+    <script>
+ $(document).ready(function(){
+     $.ajaxSetup({
+        data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+    });
+      $(".collect").click(function(){
+        $(this).children().css({"color":"red"})
+          $(this).css({"color":"red"})
+       var contend_id=$(this).attr("content_id");
+       console.log(contend_id)
+
+         $.ajax({
+            url: "/favorite/",
+            {#dataType: 'json',#}
+             type:"POST",
+             data:{contend_id:contend_id}
+        }).done(function (data) {
+            // 指定为类型为json 则会将数据处理为对象的 即自动JSON.parse 了
+             {#var data=JSON.parse(data);#}
+            alert(data.status)
+             console.log(data.status)
+        }).fail(function () {
+            alert('fail');
+        });
+      });
+
+          $(".collect2").click(function(){
+        $(this).children().css({"color":"pink"})
+          $(this).css({"color":"pink"})
+       var contend_id=$(this).attr("content_id2");
+       console.log(contend_id)
+
+         $.ajax({
+            url: "/like/",
+            {#dataType: 'json',#}
+             type:"POST",
+             data:{contend_id:contend_id}
+        }).done(function (data) {
+            // 指定为类型为json 则会将数据处理为对象的 即自动JSON.parse 了
+             {#var data=JSON.parse(data);#}
+            alert(data.status)
+             console.log(data.status)
+        }).fail(function () {
+            alert('fail');
+        });
+      });
+
+
+
+          $(".collect3").click(function(){
+        $(this).children().css({"color":"pink"})
+          $(this).css({"color":"pink"})
+       var contend_id=$(this).attr("content_id3");
+       console.log(contend_id)
+
+         $.ajax({
+            url: "/transmit/",
+            {#dataType: 'json',#}
+             type:"POST",
+             data:{contend_id:contend_id}
+        }).done(function (data) {
+            // 指定为类型为json 则会将数据处理为对象的 即自动JSON.parse 了
+             {#var data=JSON.parse(data);#}
+            alert(data.status)
+             console.log(data.status)
+        }).fail(function () {
+            alert('fail');
+        });
+      });
+            $(".reply").click(function () {
+                $(".credit-card").show();
+                 id=$(this).attr("id");
+                 users=$(this).attr("data-user")
+            })
+            $(".submit-reply").click(function () {
+                var content=$(".content-reply").val();
+                 $.ajax({
+                url: "/reply/"+id,
+                {#dataType: 'json',#}
+                 type:"POST",
+                 data:{content:content,user:users}
+            }).done(function (data) {
+                // 指定为类型为json 则会将数据处理为对象的 即自动JSON.parse 了
+                 {#var data=JSON.parse(data);#}
+                alert(data.status)
+                 console.log(data.status)
+            }).fail(function () {
+                alert('fail');
+            });
+            })
+    });
+
+</script>
+{% endblock %}

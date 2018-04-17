@@ -1,0 +1,160 @@
+{#  <link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">#}
+{% extends "posts/base.html" %}
+{#{% load staticfiles %}#}
+{#{% load static %}#}
+
+{#<title>添加数据，提交form表单</title>#}
+{##}
+{#{% block content %}#}
+{#    <div class="col-sm-6">#}
+{#    <h1>hello</h1>#}
+{#    <div class="container">#}
+{#        <form action="{% url 'posts:add' %}" method="post" role="form">#}
+{#            {% csrf_token %}#}
+{#                    {% for field in form %}#}
+{#                        {{ field.label_tag }}#}
+{#                        {{ field }}#}
+{#                        {{ field.errors }}#}
+{#                        {% if field.help_text %}#}
+{#                            <p class="help text-small text-muted">{{ field.help_text|safe }}</p>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{##}
+{#         <input type="submit" value="提交">#}
+{##}
+{#        </form>#}
+{#    </div>#}
+{##}
+{#    </div>#}
+{##}
+{#{% endblock %}#}
+
+{#{% extends "posts/base.html" %}#}
+{% load static %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load blog_tags %}
+{#{% block title %} 湖北工业大学 BBS站{% endblock %}#}
+{% block left %}
+    		<!-- Left Column -->
+		<div class="col-sm-3">
+<!-- Text Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3  style="color: red" class="panel-title">
+						<span class="glyphicon glyphicon-bullhorn"></span>
+						公告：新人必读
+					</h3>
+				</div>
+				<div class="panel-body">
+					<p style="color:red;">请文明浏览帖子，发布帖子，文明用语，禁止不良内容的发布，一经发现，封号三天，请注意</p>
+                    <p style="color:red;">游客需要登录才能发帖，转贴，点赞和收藏</p>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default">Resource</button>
+						<button type="button" class="btn btn-default">Envision</button>
+						<button type="button" class="btn btn-default">Niche</button>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- List-Group Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title"><span class="glyphicon glyphicon-tags"></span> 话题 </h1>
+				</div>
+
+                <div class="widget widget-tag-cloud">
+                    <h3 class="widget-title"></h3>
+                    {% get_tags as tag_list %}
+                    <ul class="fa-ul">
+                        {% for tag in tag_list %}
+
+                            <li class=" ">
+                                <a style="font-size: medium" href="{% url 'posts:tags' tag.pk %}">{{ tag.name }}({{ tag.num_post }})</a>
+                            </li>
+                        {% empty %}
+                            暂无标签
+                        {% endfor %}
+                    </ul>
+                </div>
+{#				<div class="list-group">#}
+{#					<a href="#" class="list-group-item">Embrace Change </a>#}
+{#					<a href="#" class="list-group-item">KISS: Keep it simple, stupid!</a>#}
+{#					<a href="#" class="list-group-item">Hide Implementation Details</a>#}
+{#					<a href="#" class="list-group-item">LoD: Law of Demeter</a>#}
+{#					<a href="#" class="list-group-item">DRY: Don't Repeat Youself</a>#}
+{#				</div>#}
+			</div>
+
+			<!-- Text Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title"><span class="glyphicon glyphicon-pencil"></span> 热点信息</h1>
+				</div>
+
+				<div class="panel-body">
+                    <div class="row pre-scrollable">
+                    <li class="list-group-item"><a href=" http://yz.chsi.com.cn">中国研究生招生信息网</a></li>
+
+                    <li class="list-group-item"><a href=" http://dean.hbut.edu.cn">湖北工业大学教务处</a></li>
+                    <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>
+                    <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>
+                    <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>
+                    <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>
+                        <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>
+                         <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>
+                         <li class="list-group-item"><a href="  http://jy.hbut.edu.cn">湖北工业 大学就业信息网</a></li>
+                    </div>
+					<p><button class="btn btn-default">Engage</button></p>
+				</div>
+			</div>
+
+
+
+		</div><!--/Left Column-->
+{% endblock %}
+{% block conten %}
+		<!-- Center Column -->
+		<div class="col-sm-6">
+			 <div class="container">
+        <form action="{% url 'posts:add' %}" method="post" role="form">
+            <div class="row" style="width: 940px;">
+                {{ form.media }}
+                {% bootstrap_form form %}
+
+            </div>
+            {% csrf_token %}
+{#                    {% for field in form %}#}
+{#                        {{ field.label_tag }}#}
+{#                        {{ field }}#}
+{#                        {{ field.errors }}#}
+{#                        {% if field.help_text %}#}
+{#                            <p class="help text-small text-muted">{{ field.help_text|safe }}</p>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+
+         <input type="submit" value="提交">
+
+        </form>
+    </div>
+			<hr>
+
+			<div class="row">
+				<article class="col-xs-12">
+					<h2>Premier Niche Markets</h2>
+					<p>Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric "outside the box" thinking. Completely pursue scalable customer service through sustainable potentialities.</p>
+					<p><button class="btn btn-default">Read More</button></p>
+					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
+					<ul class="list-inline">
+						<li><a href="#">Today</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 2 Comments</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-star-empty"></span> 8 favorites</a></li>
+					</ul>
+				</article>
+			</div>
+			<hr>
+		</div><!--/Center Column-->
+
+
+{% endblock %}
