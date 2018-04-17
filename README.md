@@ -30,7 +30,7 @@
 ## 使用步骤：
 ### django2.0 （版本没啥关系） python3.6（2.7不确定能用不） pillow(图片显示)
 ### pip install requriements.txt
-### 可以先运行星spider 文件的hotinfo.py 会生成一个bbstest.json 这个文件
+### 可以先运行spider 文件的hotinfo.py 会生成一个bbstest.json 这个文件
 ### python manage.py loaddata bbstest.json 这样数据库就会有你爬下来的数据啦
 ### 最后python manage.py runserver 
 ### http://127.0.0.1:8000 就可以看效果了 或者 http://127.0.0.1/index.html
