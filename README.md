@@ -29,7 +29,8 @@
 
 ## 使用步骤：
 ### django2.0 （版本没啥关系） python3.6（2.7不确定能用不） pillow(图片显示)
-### pip install requriements.txt
+### pip install requriements.txt 或者 pip install -r requirements.txt
+
 ### 可以先运行spider 文件的hotinfo.py 会生成一个bbstest.json 这个文件
 ### python manage.py loaddata bbstest.json 这样数据库就会有你爬下来的数据啦
 ### 最后python manage.py runserver 
